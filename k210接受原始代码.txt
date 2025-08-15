@@ -1,0 +1,74 @@
+//void Receive_Data_From_K210(uint8_t com_data)
+//{
+//	uint8_t i;
+//	static uint8_t	RxCounter1 = 0;//计数
+//	static uint16_t	RxBuffer1[10] = {0};
+//	static uint8_t	RxState = 0;	
+//	static uint8_t	RxFlag1 = 0;
+
+//	if(RxState == 0 && com_data == 0x2C)  //0x2c帧头,
+//	{
+//		RxState = 1;
+//		RxBuffer1[RxCounter1++] = com_data;  
+//	}
+
+//	else if(RxState == 1 && com_data == 0x12)  //0x12帧头OC
+//	{
+//		RxState=2;
+//		RxBuffer1[RxCounter1++] = com_data;
+//	}
+
+//	else if(RxState == 2)
+//	{
+//		 
+//		RxBuffer1[RxCounter1++] = com_data;
+//		if(RxCounter1 >= 10 || com_data == 0x5B)       //RxBuffer1接受满了,接收数据结束
+//		{
+//			RxState = 3;
+//			RxFlag1 = 1;
+//			
+//			 //正常情况下,运行到这RxCounter1 == 7？  7-5 = 2    openmv发送过来的一个数据包有8个
+//			Num =          RxBuffer1[RxCounter1 - 5]; 
+//			LoR =          RxBuffer1[RxCounter1 - 4];     //-1是左， 1是右，0表示还没有识别到任何数字
+//			Finded_flag =  RxBuffer1[RxCounter1 - 3];
+//			FindTask =     RxBuffer1[RxCounter1 - 2];
+//			
+//			//RxCounter1-1是帧尾
+//			
+//			//greenLED_Toggle;    //用来看是否接收数据的,电平翻转一次则成功接收一个数据，跟下面的一个意思
+//			GetOpenmvDataCount++;      
+//			//用来看1秒内成功解码多少个数据包的 需要在1s钟的延时中清除，帧率越高越准确，个位数的话偏差就大了
+//			//不如改一下解码代码，将openmv那里的帧率直接传过来
+//			
+//		}
+//	}
+
+//	else if(RxState == 3)		//检测是否接受到结束标志
+//	{
+//		if(RxBuffer1[RxCounter1-1] == 0x5B)		//0x5B帧尾[
+//		{	
+//			RxFlag1 = 0;
+//			RxCounter1 = 0;
+//			RxState = 0;	
+//		}
+//		else   //接收错误
+//		{
+//			RxState = 0;
+//			RxCounter1 = 0;	
+//			for(i = 0; i < 10; i++)
+//			{
+//				RxBuffer1[i] = 0x00;      //将存放数据数组清零
+//			}
+//		}
+//	}
+
+//	else   //接收异常
+//	{
+//		RxState = 0;
+//		RxCounter1 = 0;
+//		for(i = 0; i < 10; i++)
+//		{
+//			RxBuffer1[i] = 0x00;      //将存放数据数组清零
+//		}
+//	}
+//}
